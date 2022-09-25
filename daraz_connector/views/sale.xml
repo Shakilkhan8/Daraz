@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="sale_order_extended_for_daraz" model="ir.ui.view">
+            <field name="name">sale.order.daraz</field>
+            <field name="model">sale.order</field>
+
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+
+                        <button name="action_ready_to_ship" string="Ready To Ship" type="object"  class="btn-primary"/>
+                        <button name="action_delivered" string="Set To Delivered" type="object"  class="btn-primary"/>
+                        <button name="action_cancel" states="pending,ready_to_ship" type="object" string="Cancel"/>
+                        <button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>
+                        <field name="state" invisible="1"/>
+                        <field name="order_status" widget="statusbar" statusbar_visible="pending,ready_to_ship,shipped,delivered,canceled" />
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='sale_order_template_id']" position="before">
+                    <field name="customer_name" readonly="1"/>
+                    <field name="address_name"/>
+                    <field name="phone_no"/>
+                    <field name="city_id"/>
+                    <field name="status_id"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="before">
+                    <field name="instance_id" readonly="1"/>
+                    <field name="update_order_status" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_view_search_inherit_for_daraz" model="ir.ui.view">
+            <field name="name">sale.order.daraz</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='salesperson']" position="after">
+                    <filter string="Daraz Store" name="instance_id" domain="[('order_status','=','pending')]" context="{'group_by': 'instance_id'}"/>
+                </xpath>
+
+
+                <search>
+                    <separator/>
+                    <filter string="Pending Orders" name="my_pending" domain="[('order_status','=','pending')]"/>
+                    <separator/>
+                </search>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
