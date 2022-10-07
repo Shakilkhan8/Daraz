@@ -60,8 +60,8 @@ class ProductAttribute(models.Model):
         if result:
             attribute = self.create_attribute(result, instance)
 
-        return  
-        
+        return
+
     def import_attribute(self, instance, categoryId=False):
         res = self.doConnection('GetCategoryAttributes','GET', instance, categoryId)
         result = res.get('SuccessResponse', {}).get('Body', {})
@@ -69,19 +69,20 @@ class ProductAttribute(models.Model):
         if result:
             attribute = self.create_attribute(result, instance)
 
-        return  
+        return
 
     def create_attribute(self, records, parent=None):
         attribute_obj = self.env['product.attribute']
         for record in records:
             print (record)
             name = record.get("name")
+            attribute_ty = record.get('Attribute Type')
             attribute = attribute_obj.create({
-                    "name": name, 
-                    "attribute_type " : record.get("Attribute Type",''),
-                    "input_type " : record.get("Input Type",''),
-                    "is_mandatory " : record.get("Is Mandatory?",False),
-                    "is_sale_prop " : record.get("Is Sale Prop?",False),
-                    "label " : record.get("Label"),
+                    "name": name,
+                    # "attribute_type " : record['attributeType'],
+                    # "input_type " : record['inputType'],
+                    # "is_mandatory " : record['isMandatory'],
+                    # "is_sale_prop " : record['isSaleProp'],
+                    # "label " : record['label'],
                     })
         return

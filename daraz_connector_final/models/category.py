@@ -49,7 +49,7 @@ class darazCategory(models.Model):
         name = record.get("name")
         categoryId = record.get("categoryId")
         attribute_obj = self.env["product.attribute"]
-        attribute_obj.import_attribute(instance, categoryId)
+        # attribute_obj.import_attribute(instance, categoryId)
         leaf = record.get("leaf")
         if parent is not None:
             category = category_obj.create({"name": name, "darazCategoryId": categoryId, "leaf": leaf,"parent_id":parent })
