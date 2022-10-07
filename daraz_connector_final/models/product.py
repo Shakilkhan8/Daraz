@@ -64,8 +64,8 @@ class ProductProduct(models.Model):
         product_obj = self.env['product.product']
         name = records.get("name")
         product = product_obj.create({
-                "name": name, 
-                
+                "name": name,
+
                 })
         return
 
